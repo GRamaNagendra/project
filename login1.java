@@ -113,10 +113,10 @@ stmt.close();                     // Close the Statement                 5
 					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc5", "root", "root");
 			
 			
-			 Statement stmt;
-			 ResultSet rs;
-			 
-			 stmt = con.createStatement(); 
+					 Statement stmt;
+					 ResultSet rs;
+					 
+					 stmt = con.createStatement(); 
 	
 			if(uo!=1) {
 			 System.out.println("press1 If your want to post");
@@ -126,11 +126,11 @@ stmt.close();                     // Close the Statement                 5
 			}
 			
 			if(uo!=2) {
-	         System.out.println("press2 If your see your posts");
+	         System.out.println("press2 If your see latest posts");
 			}
 else {
 				
-				System.out.println("Press1 For refresh Posts");
+				System.out.println("Press2 For refresh Posts");
 			}
 			if(uo!=3) {
 	         System.out.println("press3 If your want to check your profile");
@@ -162,13 +162,35 @@ else {
 	    	   
 		         p.close();
 	    	     post(o2);
-	    	     
+	    	     con.close();
 	    	     
 	         }
 	        
 	         
 	 		
-	         
+	         if(uo==2) {
+	        	 try {
+	     			Class.forName("com.mysql.cj.jdbc.Driver");
+	     			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc5", "root", "root");
+	     	
+	     	
+	     	  System.out.println("Latest Posts");
+	     	 
+	     	 stmt = con.createStatement();            
+	     	 rs = stmt.executeQuery("select * FROM post");                    
+	           
+	     	 while (rs.next()){   
+	     		 
+	  String  post= rs.getString(1);
+	     	System.out.println(post);
+	     	 }
+	     	 
+	     post(o2);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	        	 
+	         }
 
 	         if(uo==3) {
 				  rs = stmt.executeQuery("select * from login where Gmail='"+ o2.getGmail() +"'");   
